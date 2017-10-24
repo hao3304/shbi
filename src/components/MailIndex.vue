@@ -102,14 +102,12 @@
         this.renderHistory();
       },
       renderHistory(){
-        debugger
         queryMail(this.getHistoryParams(this.type)).then(({data})=>{
           let {aggregations:{mail:{buckets=[]}}} = data;
           this.renderChart(buckets);
         })
       },
       renderChart(data) {
-
         let option = {
           color: ['#1cb781'],
           backgroundColor:'rgba(255,255,255,0)',
@@ -211,7 +209,7 @@
         switch (type){
           case 'm':
             t = '1h';
-            f = 'hh:mm:ss';
+            f = 'HH:mm:ss';
             i = '60s';
             break;
           case 'd':
@@ -247,7 +245,8 @@
                 "field": "@timestamp",
                 "interval": i,
                 "format": f,
-                "min_doc_count": 0
+                "min_doc_count": 0,
+                "time_zone": "+08:00"
               }
             }
           }
