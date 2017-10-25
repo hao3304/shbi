@@ -49,8 +49,8 @@ export default {
             name:'全部统计'
           },
           {
-            id:'mail-area',
-            name:'区域分布'
+            id:'mail-contrast',
+            name:'指标对比'
           }
         ]
       },

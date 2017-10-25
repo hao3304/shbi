@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import MailIndex from '@/components/MailIndex'
-import MailArea from '@/components/MailArea'
+import MailArea from '@/components/MailContrast'
 
 Vue.use(Router)
 
@@ -13,8 +13,8 @@ export default new Router({
       component: MailIndex
     },
     {
-      path: '/area',
-      name: 'mail-area',
+      path: '/contrast',
+      name: 'mail-contrast',
       component: MailArea
     }
   ]
