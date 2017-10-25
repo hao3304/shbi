@@ -3,7 +3,7 @@
     <div class="layout">
       <Menu mode="horizontal" theme="dark" :active-name="target.id">
         <div class="layout-logo">
-          邮件日志分析系统
+          电子邮件运行数据分析平台
         </div>
         <div class="layout-nav">
           <MenuItem :name="m.id" :key="m.id" v-for="m in menu">
