@@ -11,6 +11,10 @@
             {{m.name}}
           </MenuItem>
         </div>
+
+        <div class="layout-right">
+          <v-clock></v-clock>
+        </div>
       </Menu>
       <Menu @on-select="onSelect" mode="horizontal" :active-name="view" style="background-color: #131a2c">
         <div class="layout-assistant">
@@ -18,61 +22,68 @@
         </div>
       </Menu>
       <!--<div class="layout-breadcrumb">-->
-        <!--<Breadcrumb>-->
-          <!--<BreadcrumbItem href="#">首页</BreadcrumbItem>-->
-          <!--<BreadcrumbItem href="#">应用中心</BreadcrumbItem>-->
-          <!--<BreadcrumbItem>某应用</BreadcrumbItem>-->
-        <!--</Breadcrumb>-->
+      <!--<Breadcrumb>-->
+      <!--<BreadcrumbItem href="#">首页</BreadcrumbItem>-->
+      <!--<BreadcrumbItem href="#">应用中心</BreadcrumbItem>-->
+      <!--<BreadcrumbItem>某应用</BreadcrumbItem>-->
+      <!--</Breadcrumb>-->
       <!--</div>-->
       <div class="layout-content">
-         <div class="layout-content-main">
-           <router-view/>
-         </div>
+        <div class="layout-content-main">
+          <router-view/>
+        </div>
       </div>
       <!--<div class="layout-copy">-->
-        <!--2011-2018 &copy; 上海交通大学-->
+      <!--2011-2018 &copy; 上海交通大学-->
       <!--</div>-->
     </div>
   </div>
 </template>
 <script>
-export default {
-  data:()=>({
-    menu:[
-      {
-        id:'1',
-        name:'邮件日志',
-        icon:'ios-navigate',
-        children:[
-          {
-            id:'mail-index',
-            name:'全部统计'
-          },
-          {
-            id:'mail-contrast',
-            name:'指标对比'
-          }
-        ]
-      },
-      {
-        id:'2',
-        name:'其他日志',
-        icon:'ios-keypad',
-        children:[]
+
+  import vClock from "@/components/vClock"
+
+  export default {
+    data:()=>({
+      menu:[
+        {
+          id:'1',
+          name:'邮件日志',
+          icon:'ios-navigate',
+          children:[
+            {
+              id:'mail-index',
+              name:'全部统计'
+            },
+            {
+              id:'mail-contrast',
+              name:'指标对比'
+            }
+          ]
+        },
+        {
+          id:'2',
+          name:'其他日志',
+          icon:'ios-keypad',
+          children:[]
+        }
+      ],
+      target:{},
+      view:'mail-index'
+    }),
+    components:{
+      vClock
+    },
+    methods:{
+      onSelect(v){
+        this.$router.push({name:v});
       }
-    ],
-    target:{},
-    view:'mail-index'
-  }),
-  methods:{
-    onSelect(v){
-      this.$router.push({name:v});
+    },
+    created(){
+      this.target =  this.menu[0];
+      this.view = this.$route.name || 'mail-index';
     }
-  },
-  created(){
-    this.target = this.menu[0];
   }
-}
 </script>
 
 <style scoped >
@@ -118,6 +129,13 @@ export default {
     text-align: center;
     padding: 10px 0 20px;
     color: #9ea7b4;
+  }
+
+  .layout-right{
+    float:right;
+    width:180px;
+    height: 60px;
+    position: relative;
   }
   .ivu-menu-light.ivu-menu-horizontal .ivu-menu-item, .ivu-menu-light.ivu-menu-horizontal .ivu-menu-submenu{
     color: #fff;
