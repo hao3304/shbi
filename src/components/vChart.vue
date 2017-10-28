@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="chart" ref="chart" :style="{height:height +'px'}">
+    <div class="chart" ref="chart" :style="{height:height +'px'}" style="width:100%">
     </div>
     <Spin size="large" fix v-if="loading">
       <Icon type="load-c" size=18 class="demo-spin-icon-load"></Icon>

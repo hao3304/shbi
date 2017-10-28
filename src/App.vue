@@ -42,8 +42,10 @@
 <script>
 
   import vClock from "@/components/vClock"
+  import { getModes,postMode } from './module/service'
 
   export default {
+    store:['modes'],
     data:()=>({
       menu:[
         {
@@ -58,6 +60,10 @@
             {
               id:'mail-contrast',
               name:'指标对比'
+            },
+            {
+              id:'mail-config',
+              name:'指标配置'
             }
           ]
         },
@@ -82,6 +88,33 @@
     created(){
       this.target =  this.menu[0];
       this.view = this.$route.name || 'mail-index';
+
+      getModes().then(({data})=>{
+        if(data.Code == 0) {
+          this.modes = data.Response;
+        }
+      });
+
+//      if(false) {
+//        let len = this.modes.length;
+//        this.modes.forEach(item=>{
+//          if(item.name != '全部') {
+//
+//            var p = {
+//              Name:item.name,
+//              Query: item.value,
+//              Index: len,
+//              Visible: true
+//            }
+//            len--;
+//            debugger
+//            postMode(p).then(rep=>{
+//
+//            })
+//          }
+//        })
+//
+//      }
     }
   }
 </script>
@@ -93,7 +126,7 @@
 
   .layout{
     border: 1px solid #d7dde4;
-    background: #131a2c;;
+    background: #131a2c;
     height: 100%;
   }
   .layout-logo{

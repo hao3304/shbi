@@ -2,7 +2,8 @@
   <div>
     <div class="mode-select">
       <Select v-model="mode" @on-change="onModeChange">
-        <Option v-for="m in modes" :value="m.value" :key="m.value">{{m.name}}</Option>
+        <Option value="all">全部</Option>
+        <Option v-for="m in list" v-if="m.Visible" :value="m.Query" :key="m.Query">{{m.Name}}</Option>
       </Select>
     </div>
     <Row>
@@ -100,6 +101,19 @@
         loading:true,
         type:'m',
         mode:'all'
+      }
+    },
+    computed:{
+      list() {
+        if(this.modes) {
+          return this.modes.sort((a, b)=>{
+            return b.Created - a.Created
+          }).sort((a,b)=>{
+            return b.Index - a.Index
+          })
+        }else{
+          return [];
+        }
       }
     },
     methods:{

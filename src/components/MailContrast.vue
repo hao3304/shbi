@@ -10,9 +10,9 @@
       </div>
     </div>
     <Row>
-      <Col :lg="8" :md="8" :sm="12" :xs="24" v-for="(m , index) in modes" :key="index" style="padding: 5px">
+      <Col :lg="8" :md="8" :sm="12" :xs="24" v-for="(m , index) in list"  v-if="m.Visible" :key="index" style="padding: 5px">
         <div class="chart-box">
-          <v-chart :type="type" :query="m.value" :name="m.name" :height="height"></v-chart>
+          <v-chart :type="type" :query="m.Query" :name="m.Name" :height="height"></v-chart>
         </div>
       </Col>
     </Row>
@@ -43,6 +43,19 @@
       return {
         height:'200px',
         type:'m'
+      }
+    },
+    computed:{
+      list() {
+        if(this.modes) {
+          return this.modes.sort((a, b)=>{
+            return b.Created - a.Created
+          }).sort((a,b)=>{
+            return b.Index - a.Index
+          })
+        }else{
+          return [];
+        }
       }
     },
     methods:{
