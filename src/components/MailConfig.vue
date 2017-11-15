@@ -38,9 +38,9 @@
       <div style="background-color: #495060;">
         <div style="text-align: right;padding-top: 5px;padding-right: 5px;">
           <ButtonGroup size="small">
-            <Button  :type="testMode.type=='m'?'primary':'default'" @click="onSelect('m')" >最近24小时</Button>
-            <Button  :type="testMode.type=='d'?'primary':'default'"  @click="onSelect('d')" >最近30天</Button>
-            <Button  :type="testMode.type=='M'?'primary':'default'"  @click="onSelect('M')" >最近12月</Button>
+            <Button  :type="testMode.type=='24h'?'primary':'default'" @click="onSelect('24h')" >最近24小时</Button>
+            <Button  :type="testMode.type=='30d'?'primary':'default'"  @click="onSelect('30d')" >最近30天</Button>
+            <Button  :type="testMode.type=='12m'?'primary':'default'"  @click="onSelect('12m')" >最近12月</Button>
           </ButtonGroup>
         </div>
         <v-chart :type="testMode.type" :query="testMode.query" :name="testMode.name" :height="testMode.height" v-if="testModal">
@@ -200,7 +200,7 @@
         testModal:false,
         testMode:{
           query:'',
-          type:'m',
+          type:'24h',
           height:300,
           name:''
         }

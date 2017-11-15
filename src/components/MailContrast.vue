@@ -3,9 +3,12 @@
     <div class="mode-change">
       <div style="float: right">
         <ButtonGroup>
-          <Button  :type="type=='m'?'primary':'default'" @click="onSelect('m')" >最近24小时</Button>
-          <Button  :type="type=='d'?'primary':'default'"  @click="onSelect('d')" >最近30天</Button>
-          <Button  :type="type=='M'?'primary':'default'"  @click="onSelect('M')" >最近12月</Button>
+          <Button  :type="type=='1h'?'primary':'default'" @click="onSelect('1h')" >最近1小时</Button>
+          <Button  :type="type=='24h'?'primary':'default'" @click="onSelect('24h')" >最近24小时</Button>
+          <Button  :type="type=='7d'?'primary':'default'" @click="onSelect('7d')" >最近7天</Button>
+          <Button  :type="type=='30d'?'primary':'default'"  @click="onSelect('30d')" >最近30天</Button>
+          <Button  :type="type=='12m'?'primary':'default'"  @click="onSelect('12m')" >最近12月</Button>
+          <Button  :type="type=='all'?'primary':'default'"  @click="onSelect('all')" >全部</Button>
         </ButtonGroup>
       </div>
     </div>
@@ -28,7 +31,7 @@
     position: fixed;
     top:75px;
     right: 20px;
-    width: 400px;
+    width: 500px;
     z-index: 1000;
   }
 
@@ -42,7 +45,7 @@
     data(){
       return {
         height:'200px',
-        type:'m'
+        type:'1h'
       }
     },
     computed:{

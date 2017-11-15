@@ -110,20 +110,34 @@
         let t = '1h',f = 'YYYY-MM-dd',i;
 
         switch (type){
-          case 'm':
+          case '1h':
             t = '1h';
             f = 'HH:mm:ss';
             i = '60s';
             break;
-          case 'd':
+          case '24h':
+            t = '24h';
+            f = 'HH:mm:ss';
+            i = '30m';
+            break;
+          case '7d':
+            t = '7d';
+            f = 'YYYY-MM HH:mm';
+            i = '3h';
+            break;
+          case '30d':
             t = '30d';
             f = 'YYYY-MM-dd';
             i = '1d';
             break;
-          case 'M':
+          case '12m':
             t = '12M';
             f = 'YYYY-MM';
             i = '1M';
+            break;
+          case 'all':
+            f = 'YYYY-MM';
+            i = '1M'
         }
 
         let p = {
@@ -162,6 +176,10 @@
               "all_fields": true
             }
           })
+        }
+
+        if(type == 'all') {
+          delete p['query']
         }
 
         return p

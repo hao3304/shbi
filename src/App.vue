@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="layout">
-      <Menu mode="horizontal" theme="dark" :active-name="target.id">
+      <Menu mode="horizontal" @on-select="onChangeModule"  theme="dark" :active-name="target.id">
         <div class="layout-logo">
           电子邮件运行数据分析平台
         </div>
@@ -49,7 +49,7 @@
     data:()=>({
       menu:[
         {
-          id:'1',
+          id:'mail',
           name:'邮件日志',
           icon:'ios-navigate',
           children:[
@@ -66,16 +66,29 @@
               name:'指标配置'
             }
           ]
-        },
-        {
-          id:'2',
-          name:'其他日志',
+        },{
+          id:"search",
           icon:'ios-keypad',
-          children:[]
+          name:"邮件查询",
+          children:[
+            {
+              id:'search-record',
+              name:'访问记录'
+            },
+            {
+              id:'search-email',
+              name:'邮件传递记录'
+            },
+            {
+              id:'mail-cmd',
+              name:'邮箱管理'
+            }
+          ]
         }
       ],
       target:{},
-      view:'mail-index'
+      view:'mail-index',
+      module:'mail'
     }),
     components:{
       vClock
@@ -83,38 +96,29 @@
     methods:{
       onSelect(v){
         this.$router.push({name:v});
+      },
+      onChangeModule(v) {
+        this.module = v;
+        this.target = this.menu.find(m=>{
+          return m.id == v;
+        });
+        this.$router.push({name:this.target.children[0].id});
+        this.$nextTick(()=>{
+          this.view = this.target.children[0].id;
+        })
       }
     },
     created(){
-      this.target =  this.menu[0];
       this.view = this.$route.name || 'mail-index';
-
+      this.module = this.view.split('-')[0];
+      this.target =  this.menu.find(m=>{
+        return m.id == this.module;
+      });
       getModes().then(({data})=>{
         if(data.Code == 0) {
           this.modes = data.Response;
         }
       });
-
-//      if(false) {
-//        let len = this.modes.length;
-//        this.modes.forEach(item=>{
-//          if(item.name != '全部') {
-//
-//            var p = {
-//              Name:item.name,
-//              Query: item.value,
-//              Index: len,
-//              Visible: true
-//            }
-//            len--;
-//            debugger
-//            postMode(p).then(rep=>{
-//
-//            })
-//          }
-//        })
-//
-//      }
     }
   }
 </script>
@@ -143,7 +147,7 @@
     margin-left: 220px;
   }
   .layout-assistant{
-    width: 300px;
+    width: 400px;
     height: inherit;
   }
   .layout-breadcrumb{
