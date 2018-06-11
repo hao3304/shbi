@@ -217,7 +217,7 @@
         }
         if(this.form.date) {
           let date = this.getDate(this.form.date);
-          if(data[0]!=0 && data[1]!=0) {
+          if(date[0]!=0 && date[1]!=0) {
             where['begin'] = date[0];
             where['end']= date[1];
           }
