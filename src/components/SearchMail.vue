@@ -215,11 +215,13 @@
         if(email) {
           where['toAddr'] = email + prefix;
         }
-debugger
         if(this.form.date) {
           let date = this.getDate(this.form.date);
-          where['begin'] = date[0];
-          where['end']= date[1];
+          if(data[0]!=0 && data[1]!=0) {
+            where['begin'] = date[0];
+            where['end']= date[1];
+          }
+
         }
 
 //        let search = process.env.SEARCH_ROOT;
