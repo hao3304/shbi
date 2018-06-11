@@ -121,25 +121,25 @@
         this.renderTarget();
       },
       renderTarget() {
-        queryMail(this.getParams('24h')).then(({data})=>{
+        queryMail(this.getParams('24h')).then(data=>{
           let {hits:{total}} = data;
           this.times.last24h = total;
         })
-        queryMail(this.getParams('7d')).then(({data})=>{
+        queryMail(this.getParams('7d')).then(data=>{
           let {hits:{total}} = data;
           this.times.last7d = total;
         })
-        queryMail(this.getParams('30d')).then(({data})=>{
+        queryMail(this.getParams('30d')).then(data=>{
           let {hits:{total}} = data;
           this.times.last30d = total;
         })
-        queryMail(this.getParams('all')).then(({data})=>{
+        queryMail(this.getParams('all')).then(data=>{
           this.times.all = data.hits.total;
         });
         this.renderHistory();
       },
       renderHistory(){
-        queryMail(this.getHistoryParams(this.type)).then(({data})=>{
+        queryMail(this.getHistoryParams(this.type)).then(data=>{
           let {aggregations:{mail:{buckets=[]}}} = data;
           this.renderChart(buckets);
         })

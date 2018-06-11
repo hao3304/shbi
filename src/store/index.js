@@ -21,5 +21,9 @@ export default {
     // {name:'正常接收哈尔滨工程大学的邮件', value:'mx AND "client=mail.hit.edu.cn" AND "postfix/smtpd" NOT "NOQUEUE"'},
     // {name:'拒收哈尔滨工程大学的邮件', value:'mx AND "client=mail.hit.edu.cn" AND "postfix/smtpd" AND "NOQUEUE"'}
   ],
-  test:[]
+  login:false,
+  token:'',
+  admin:false,
+  userId:'',
+  username:''
 }

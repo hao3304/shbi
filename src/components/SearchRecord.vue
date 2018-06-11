@@ -1,5 +1,5 @@
 <template>
-  <div style="color: #fff">
+  <div class="app" style="color: #fff">
     <Form ref="form" :model="form"  :label-width="80" :rules="rules" inline>
       <FormItem prop="email" label="目标邮件">
         <Input v-model="form.email">
@@ -29,9 +29,7 @@
   </div>
 </template>
 <style>
-  .ivu-form  .ivu-form-item-label{
-    color: #fff;
-  }
+
 
 </style>
 <script>
@@ -134,7 +132,6 @@
         params.email += this.prefix;
         let query = {...params,...{date:this.getDate(this.form.date)}}
         searchRecord(query).then(rep=>{
-          rep = rep.data;
           this.total = rep.total.records[0]._fields[0].low;
           this.data = this.transData(rep.data);
           this.loading = false;

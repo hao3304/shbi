@@ -6,6 +6,7 @@ import MailConfig from '@/components/MailConfig'
 import SearchRecord from '@/components/SearchRecord'
 import SearchMail from '@/components/SearchMail'
 import MailCmd from '@/components/MailCmd'
+import USerConfig from '@/components/UserConfig'
 
 Vue.use(Router)
 
@@ -37,9 +38,14 @@ export default new Router({
       component: SearchMail
     },
     {
-      path: '/cmd',
-      name: 'mail-cmd',
+      path: '/config_mail',
+      name: 'config-mail',
       component: MailCmd
+    },
+    {
+      path: '/config_user',
+      name: 'config-user',
+      component: USerConfig
     }
   ]
 })

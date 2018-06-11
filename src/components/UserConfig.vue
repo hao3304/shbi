@@ -6,20 +6,23 @@
       </div>
     </div>
     <Table :loading="table_loading"  :stripe="true" :columns="columns" :data="list" size="small"></Table>
+    <div style="text-align: right;padding:10px 0">
+      <Page :total="total" @on-change="currentChange" :page-size="20"></Page>
+    </div>
     <Modal
       v-model="show"
       :title="modelTitle"
     >
 
       <Form ref="form" :model="model" :label-width="80"  :rules="ruleValidate" >
-        <FormItem label="指标名称" prop="Name">
-          <Input v-model="model.Name" placeholder="请输入指标名称" />
+        <FormItem label="姓名" prop="Name">
+          <Input v-model="model.Name" placeholder="请输入用户姓名" />
         </FormItem>
-        <FormItem label="查询条件" prop="Query">
-          <Input v-model="model.Query"  type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入查询条件" />
+        <FormItem label="用户名" prop="UserName">
+          <Input v-model="model.UserName" placeholder="请输入用户名" />
         </FormItem>
-        <FormItem label="排序序号">
-          <InputNumber v-model="model.Index" :min="0" :max="9999" placeholder="请输入排序序号" />
+        <FormItem label="密码" prop="Password">
+          <Input v-model="model.Password" placeholder="请输入密码" />
         </FormItem>
         <FormItem label="是否启用">
           <i-switch v-model="model.Visible" size="large">
@@ -31,23 +34,6 @@
       <div slot="footer">
         <Button :loading="loading" type="primary" @click="onSave">提交</Button>
         <Button type="default" style="margin-left: 8px" @click="onCancel">取消</Button>
-      </div>
-    </Modal>
-
-    <Modal v-model="testModal" :width='600' title="指标测试">
-      <div style="background-color: #495060;">
-        <div style="text-align: right;padding-top: 5px;padding-right: 5px;">
-          <ButtonGroup size="small">
-            <Button  :type="testMode.type=='24h'?'primary':'default'" @click="onSelect('24h')" >最近24小时</Button>
-            <Button  :type="testMode.type=='30d'?'primary':'default'"  @click="onSelect('30d')" >最近30天</Button>
-            <Button  :type="testMode.type=='12m'?'primary':'default'"  @click="onSelect('12m')" >最近12月</Button>
-          </ButtonGroup>
-        </div>
-        <v-chart :type="testMode.type" :query="testMode.query" :name="testMode.name" :height="testMode.height" v-if="testModal">
-        </v-chart>
-      </div>
-      <div slot="footer">
-        <Button type="default" style="margin-left: 8px" @click="testModal = false">关闭</Button>
       </div>
     </Modal>
   </div>
@@ -62,13 +48,13 @@
   }
 </style>
 <script>
-  import { postMode,getModes,deleteMode,updateMode } from '../module/service'
+  import { postUser,getUser,deleteUser,updateUser } from '../module/service'
   import vChart from '@/components/vChart'
   export default {
-    store:['modes'],
     data(){
       return {
-        modelTitle:'新增指标',
+        users:[],
+        modelTitle:'新增用户',
         columns:[
           {
             type: 'index',
@@ -80,10 +66,13 @@
             key:'Name',
           },
           {
-            title:'查询条件',
-            key:'Query'
+            title:'用户名',
+            key:'UserName'
           },
-
+          {
+            title:'密码',
+            key:'Password'
+          },
           {
             title:'状态',
             key:'Visible',
@@ -125,31 +114,12 @@
             }
           },
           {
-            title:'排序',
-            key:'Index',
-            width:80,
-            align:'center',
-          },
-          {
             title: '操作',
             key: 'action',
             width: 200,
             align: 'center',
             render: (h, params) => {
               return h('div', [
-                h('Button', {
-                  props: {
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px'
-                  },
-                  on: {
-                    click: () => {
-                      this.onTest(params.row)
-                    }
-                  }
-                }, '测试'),
                 h('Button', {
                   props: {
                     type: 'primary',
@@ -185,15 +155,18 @@
         model:{
           Id:'',
           Name:'',
-          Query:'',
-          Index:0,
+          UserName:'',
+          Password:'',
           Visible:true
         },
         ruleValidate:{
           Name:[
             {required:true,message:'必填',trigger:'blur'}
           ],
-          Query:[
+          UserName:[
+            {required:true,message:'必填',trigger:'blur'}
+          ],
+          Password:[
             {required:true,message:'必填',trigger:'blur'}
           ]
         },
@@ -203,13 +176,16 @@
           type:'24h',
           height:300,
           name:''
-        }
+        },
+        page:0,
+        size:20,
+        total:0
       }
     },
     computed:{
       list() {
-        if(this.modes) {
-          return this.modes.sort((a, b)=>{
+        if(this.users) {
+          return this.users.sort((a, b)=>{
             return b.Created - a.Created
           }).sort((a,b)=>{
             return b.Index - a.Index
@@ -221,7 +197,8 @@
     },
     methods:{
       onAdd(){
-        this.modelTitle = '新增指标';
+        this.$refs.form.resetFields()
+        this.modelTitle = '新增用户';
         this.show = true;
       },
       onSave() {
@@ -229,20 +206,20 @@
           if(valid) {
             this.loading = true;
             if(this.model.Id) {
-              updateMode(this.model).then(data=>{
+              updateUser(this.model).then(data=>{
                 if(data.Code == 0) {
                   this.loading = false;
                   this.show = false;
-                  this.$Message.success('更新指标成功！');
+                  this.$Message.success('更新用户成功！');
                   this.refresh();
                 }
               })
             }else{
-              postMode(this.model).then(data=>{
+              postUser(this.model).then(data=>{
                 if(data.Code == 0) {
                   this.loading = false;
                   this.show = false;
-                  this.$Message.success('新增指标成功！');
+                  this.$Message.success('新增用户成功！');
                   this.refresh();
                 }
 
@@ -257,24 +234,26 @@
       },
       refresh() {
         this.table_loading = true;
-        getModes().then(data=>{
+        getUser(this.page*this.size).then(data=>{
           if(data.Code == 0) {
-            this.modes = data.Response;
+            this.users = data.Response.Data;
+            this.page = data.Response.Page;
+            this.total = data.Response.Total;
           }
           this.table_loading = false;
         })
       },
       onEdit(row) {
-        this.modelTitle = '编辑指标';
+        this.modelTitle = '编辑用户';
         this.model = {...row};
         this.show = true;
       },
       onRemove(row) {
         this.$Modal.confirm({
           title: '提示',
-          content: `确定要删除指标："<strong style="color:red">${row.Name}</strong>"？`,
+          content: `确定要删除用户："<strong style="color:red">${row.Name}</strong>"？`,
           onOk: () => {
-            deleteMode(row.Id).then(data=>{
+            deleteUser(row.Id).then(data=>{
               if(data.Code == 0) {
                 this.$Message.success('删除成功');
                 this.refresh();
@@ -293,7 +272,14 @@
       },
       onSelect(t) {
         this.testMode.type = t;
+      },
+      currentChange(v) {
+        this.page = v;
+        this.refresh()
       }
+    },
+    mounted(){
+      this.refresh();
     },
     components:{
       vChart

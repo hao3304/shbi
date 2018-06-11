@@ -187,7 +187,7 @@
       render() {
         this.loading = true;
         let params = this.getHistoryParams(this.type);
-        queryMail(params).then(({data})=>{
+        queryMail(params).then(data=>{
           let {aggregations:{mail:{buckets=[]}}} = data;
           this.renderChart(buckets);
         })

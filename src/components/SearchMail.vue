@@ -1,13 +1,13 @@
 <template>
   <div style="color: #fff">
       <Form ref="form" :model="form"  :label-width="80" :rules="rules" inline>
-        <FormItem prop="email" label="目标邮件">
+        <FormItem prop="email" style="color: #fff;" label="目标邮件">
           <Input v-model="form.email">
             <span slot="append">@sjtu.edu.cn</span>
           </Input>
         </FormItem>
-        <FormItem label="日期范围">
-          <DatePicker :value="form.date" format="yyyy/MM/dd" type="daterange" placement="bottom-end" placeholder="请选择日期范围" style="width: 200px"></DatePicker>
+        <FormItem label="日期范围" style="color: #fff;" >
+          <DatePicker v-model="form.date" format="yyyy/MM/dd" type="daterange" placement="bottom-end" placeholder="请选择日期范围" style="width: 200px"></DatePicker>
         </FormItem>
         <FormItem>
           <Button icon="search" @click="onSearch" >查询</Button>
@@ -42,7 +42,6 @@
 <script>
 
   import { searchRecord } from '../module/service';
-  import axios from 'axios';
   import vSend from '@/components/vSend';
   import vReceive from '@/components/vReceive';
 
@@ -88,24 +87,24 @@
           {
             title:'#',
             width: 60,
-            render: (h, params) => {
-              return h('span',params.index + (params.row.page-1)*20 +1)
+            render: (h, {row}) => {
+              return h('span',row.index + (row.page-1)*20 +1)
             }
           },
           {
             title:'发送地址',
-            key:'address'
+            key:'fromAddr'
           },
           {
             title:'发送时间',
             render:(h,{row})=>{
-              return h('span',new Date(row.sendTime*1000).Format('yyyy-MM-dd hh:ss'))
+              return h('span',new Date(row.timestamp*1000).Format('yyyy-MM-dd hh:ss'))
             }
           },
           {
-            title:'邮件大小',
+            title:'IP',
             render:(h,{row})=>{
-              return h('span',(row.size/1024).toFixed(2))
+              return h('span', row.ipAddr)
             }
           }
         ],
@@ -212,14 +211,36 @@
         let page = this.activeName == 'send'?this.send_page:this.receive_page;
         let prefix = this.prefix;
 
-        let search = process.env.SEARCH_ROOT;
+        let where = {status: type == 'send'?'sent':type, page: page};
+        if(email) {
+          where['toAddr'] = email + prefix;
+        }
+debugger
+        if(this.form.date) {
+          let date = this.getDate(this.form.date);
+          where['begin'] = date[0];
+          where['end']= date[1];
+        }
 
-        axios.get(search + `/${email}${prefix}/${type}/${page}`,{params:{date:this.getDate(this.form.date)}}).then(rep=>{
-          rep = rep.data;
-          this[this.activeName+'_total'] = rep.total.records[0]._fields[0].low;
-          this[this.activeName] = this.transData(rep.data);
+//        let search = process.env.SEARCH_ROOT;
+
+//        axios.get(search + `/${email}${prefix}/${type}/${page}`,{params:{date:this.getDate(this.form.date)}}).then(rep=>{
+//          this[this.activeName+'_total'] = rep.total.records[0]._fields[0].low;
+//          this[this.activeName] = this.transData(rep.data);
+//          this[this.activeName+'_loading'] = false;
+//        })
+
+        searchRecord(where).then(rep=> {
+          let data = rep.data;
+          this[this.activeName+'_total'] = data.count;
+          this[this.activeName] = data.data.map((d,index)=>{
+            d.index = index;
+            d.page = page;
+            return d;
+          });
           this[this.activeName+'_loading'] = false;
         })
+
       },
       getDate(d){
         if(d.length == 2){
