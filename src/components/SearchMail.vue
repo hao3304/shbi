@@ -96,13 +96,13 @@
             key:'fromAddr'
           },
           {
-            title:'发送时间',
+            title:'收件时间',
             render:(h,{row})=>{
               return h('span',new Date(row.timestamp*1000).Format('yyyy-MM-dd hh:ss'))
             }
           },
           {
-            title:'IP',
+            title:'对方IP',
             render:(h,{row})=>{
               return h('span', row.ipAddr)
             }
