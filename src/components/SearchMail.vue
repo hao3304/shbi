@@ -1,5 +1,5 @@
 <template>
-  <div style="color: #fff">
+  <div class="app" style="color: #fff">
       <Form ref="form" :model="form"  :label-width="80" :rules="rules" inline>
         <FormItem prop="email" style="color: #fff;" label="目标邮件">
           <Input v-model="form.email">
@@ -17,17 +17,17 @@
     <div style="padding:0 10px;">
       <Tabs :value="activeName" @on-click="onTabChange">
         <TabPane label="收件箱" name="receive">
-          <Table :loading="receive_loading" :columns="columns"  :data="receive"></Table>
+          <Table :loading="receive_loading" :columns="columns2"  :data="receive"></Table>
           <div style="text-align: right;padding:10px 0">
             <Page :total="receive_total" @on-change="receiveCurrentChange" :page-size="20"></Page>
           </div>
         </TabPane>
-        <TabPane label="发件箱" name="send">
-          <Table :loading="send_loading" :columns="columns2"  :data="send"></Table>
-          <div style="text-align: right;padding:10px 0">
-            <Page :total="send_total" @on-change="sendCurrentChange" :page-size="20"></Page>
-          </div>
-        </TabPane>
+        <!--<TabPane label="发件箱" name="send">-->
+          <!--<Table :loading="send_loading" :columns="columns2"  :data="send"></Table>-->
+          <!--<div style="text-align: right;padding:10px 0">-->
+            <!--<Page :total="send_total" @on-change="sendCurrentChange" :page-size="20"></Page>-->
+          <!--</div>-->
+        <!--</TabPane>-->
       </Tabs>
 
     </div>
@@ -35,7 +35,7 @@
   </div>
 </template>
 <style>
-  .ivu-form .ivu-form-item-label{
+  .app .ivu-form .ivu-form-item-label{
     color: #fff;
   }
 </style>
@@ -73,17 +73,17 @@
         activeName:'receive',
         hasSearch:false,
         columns2:[
-          {
-            type: 'expand',
-            width: 50,
-            render: (h, params) => {
-              return h(vSend, {
-                props: {
-                  row: params.row
-                }
-              })
-            }
-          },
+//          {
+//            type: 'expand',
+//            width: 50,
+//            render: (h, params) => {
+//              return h(vSend, {
+//                props: {
+//                  row: params.row
+//                }
+//              })
+//            }
+//          },
           {
             title:'#',
             width: 60,
@@ -92,7 +92,7 @@
             }
           },
           {
-            title:'发送地址',
+            title:'对方地址',
             key:'fromAddr'
           },
           {
@@ -211,7 +211,7 @@
         let page = this.activeName == 'send'?this.send_page:this.receive_page;
         let prefix = this.prefix;
 
-        let where = {status: type == 'send'?'sent':type, page: page};
+        let where = {status: 'sent', page: page};
         if(email) {
           where['toAddr'] = email + prefix;
         }
@@ -234,13 +234,13 @@
 
         searchRecord(where).then(rep=> {
           let data = rep.data;
-          this[this.activeName+'_total'] = data.count;
-          this[this.activeName] = data.data.map((d,index)=>{
+          this['receive_total'] = data.count;
+          this['receive'] = data.data.map((d,index)=>{
             d.index = index;
             d.page = page;
             return d;
           });
-          this[this.activeName+'_loading'] = false;
+          this['receive_loading'] = false;
         })
 
       },
