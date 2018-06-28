@@ -137,6 +137,10 @@
               {
                 id:'search-email',
                 name:'邮件传递记录'
+              },
+              {
+                id: 'search-top',
+                name: 'Top统计'
               }
             ]
           },{

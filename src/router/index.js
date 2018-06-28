@@ -7,6 +7,7 @@ import SearchRecord from '@/components/SearchRecord'
 import SearchMail from '@/components/SearchMail'
 import MailCmd from '@/components/MailCmd'
 import USerConfig from '@/components/UserConfig'
+import Top from '@/components/Top'
 
 Vue.use(Router)
 
@@ -46,6 +47,11 @@ export default new Router({
       path: '/config_user',
       name: 'config-user',
       component: USerConfig
+    },
+    {
+      path: '/search_top',
+      name: 'search-top',
+      component: Top
     }
   ]
 })
