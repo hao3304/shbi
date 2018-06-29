@@ -98,7 +98,7 @@
           {
             title:'收件时间',
             render:(h,{row})=>{
-              return h('span',new Date(row.timestamp*1000).Format('yyyy-MM-dd hh:ss'))
+              return h('span',new Date(row.timestamp*1000).Format('yyyy-MM-dd hh:mm:ss'))
             }
           },
           {
