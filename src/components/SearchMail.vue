@@ -134,7 +134,7 @@
           {
             title: '对方发送时间',
             render:(h,{row})=>{
-              return h('span',new Date(row.sendTime*1000).Format('yyyy-MM-dd hh:ss'))
+              return h('span',new Date(row.sendTime*1000).Format('yyyy-MM-dd hh:mm:ss'))
             }
           },
           {
