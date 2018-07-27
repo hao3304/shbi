@@ -98,7 +98,7 @@
           {
             title:'收件时间',
             render:(h,{row})=>{
-              return h('span',new Date(row.timestamp*1000).Format('yyyy-MM-dd hh:mm:ss'))
+              return h('span',new Date(row.timestamp*1000 + 8*3600*1000).Format('yyyy-MM-dd hh:mm:ss'))
             }
           },
           {
@@ -218,8 +218,8 @@
         if(this.form.date) {
           let date = this.getDate(this.form.date);
           if(date[0]!=0 && date[1]!=0) {
-            where['begin'] = date[0];
-            where['end']= date[1];
+            where['begin'] = date[0] - 8*3600;
+            where['end']= date[1]- 8*3600;
           }
 
         }
