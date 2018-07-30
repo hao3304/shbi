@@ -43,5 +43,7 @@ export const getLogs = (page)=>axios.get(service + '/log',{params:{page:page}})
 
 export const searchRecord = params=>axios.get(search + `/api/search`, {params:params})
 export const searchTop = params=>axios.get(search + `/api/top`, {params:params})
+export const getIp = ()=>axios.get(search + `/api/ip`);
+export const postIp = params=>axios.post(search + `/api/ip`, params);
 
 export const doLogin = params=>axios.post('/auth/login',params);

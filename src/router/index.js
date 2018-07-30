@@ -8,6 +8,7 @@ import SearchMail from '@/components/SearchMail'
 import MailCmd from '@/components/MailCmd'
 import USerConfig from '@/components/UserConfig'
 import Top from '@/components/Top'
+import Ip from '@/components/IpConfig'
 
 Vue.use(Router)
 
@@ -47,6 +48,11 @@ export default new Router({
       path: '/config_user',
       name: 'config-user',
       component: USerConfig
+    },
+    {
+      path: '/config_ip',
+      name: 'config-ip',
+      component: Ip
     },
     {
       path: '/search_top',

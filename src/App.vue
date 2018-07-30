@@ -156,6 +156,11 @@
                 id:'config-user',
                 name:'用户管理',
                 admin:true
+              },
+              {
+                id:'config-ip',
+                name:'ip白名单',
+                admin:true
               }
             ]
           }
