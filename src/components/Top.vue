@@ -90,7 +90,6 @@
         })
       },
       renderChart(data) {
-    debugger
         let option = {
           color: ['#3398DB'],
           tooltip : {

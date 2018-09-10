@@ -141,6 +141,10 @@
               {
                 id: 'search-top',
                 name: 'Top统计'
+              },
+              {
+                id: 'search-geo',
+                name: '区域统计'
               }
             ]
           },{
@@ -268,7 +272,7 @@
     margin-left: 220px;
   }
   .layout-assistant{
-    width: 400px;
+    width: 500px;
     height: inherit;
   }
   .layout-breadcrumb{

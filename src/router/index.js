@@ -8,6 +8,7 @@ import SearchMail from '@/components/SearchMail'
 import MailCmd from '@/components/MailCmd'
 import USerConfig from '@/components/UserConfig'
 import Top from '@/components/Top'
+import GeoTop from '@/components/GeoTop'
 import Ip from '@/components/IpConfig'
 
 Vue.use(Router)
@@ -58,6 +59,11 @@ export default new Router({
       path: '/search_top',
       name: 'search-top',
       component: Top
+    },
+    {
+      path: '/search_geo',
+      name: 'search-geo',
+      component: GeoTop
     }
   ]
 })
