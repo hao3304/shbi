@@ -35,7 +35,7 @@
     data() {
       return {
         form: {
-          type: 'world',
+          type: 'china',
           range: 'hour'
         },
         height: document.documentElement.clientHeight - 220 + 'px',
@@ -45,6 +45,7 @@
         columns: [
           {
             title: '#',
+
             key: 'index'
           },
           {
@@ -122,7 +123,7 @@
             animationEasingUpdate: 'cubicInOut',
             title: [
               {
-                text: '邮件来源分布',
+                text: '邮件来源分布（中国）',
                 sublink: '',
                 left: 'center',
                 textStyle: {
@@ -292,7 +293,7 @@
           option = {
             backgroundColor: '#404a59',
             title: {
-              text: '上海',
+              text: '邮件来源分布（世界）',
               left: 'center',
               textStyle: {
                 color: '#fff',
