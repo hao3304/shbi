@@ -39,7 +39,7 @@
     </Form>
 
     <div style="padding: 0 10px;"  v-show="mode =='chart'">
-      <div ref="chart"  style="height: 400px" ></div>
+      <div ref="chart"  :style="{height: height}" ></div>
     </div>
 
     <div style="padding:0 10px;" v-show="mode=='table'">
@@ -58,6 +58,7 @@
           range: 'hour',
           k: '10'
         },
+        height: document.documentElement.clientHeight - 250 + 'px',
         loading: false,
         mode: 'chart',
         data: [],

@@ -17,7 +17,7 @@
         </Select>
       </FormItem>
       <!--<FormItem>-->
-        <!--<Button icon="search" @click="onSearch" >查询</Button>-->
+      <!--<Button icon="search" @click="onSearch" >查询</Button>-->
       <!--</FormItem>-->
     </Form>
     <div v-show="form.type == 'china'" ref="china" :style="{height: height}"  ></div>
@@ -290,6 +290,7 @@
             ]
           };
         }else{
+          let max = data[0].value[2]
           option = {
             backgroundColor: '#404a59',
             title: {
@@ -321,7 +322,7 @@
             },
             visualMap: { //图例值控制
               min: 0,
-              max: 10000,
+              max: max,
               calculable: true,
               color: ['#ff3333', 'orange', 'yellow', 'lime', 'aqua'],
               textStyle: {
@@ -372,7 +373,7 @@
                       coord: [item.value[0], item.value[1]],
                       value: item.value[2]
                     },{
-                    coord: [121.4648, 31.2891]
+                      coord: [121.4648, 31.2891]
                     }
                   ]
                 })
