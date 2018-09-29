@@ -41,7 +41,8 @@ export const deleteUser = id=>axios.delete(service + `/user/${id}`)
 export const doCmd = params=>axios.get(service + `/ssh`, {params:params})
 export const getLogs = (page)=>axios.get(service + '/log',{params:{page:page}})
 
-export const searchRecord = params=>axios.get(search + `/api/query`, {params:params})
+export const searchRecord = params=>axios.get(search + `/api/search`, {params:params})
+export const queryRecord = params=>axios.get(search + `/api/query`, {params:params})
 export const searchTop = params=>axios.get(search + `/api/top`, {params:params})
 export const getIp = ()=>axios.get(search + `/api/ip`);
 export const postIp = params=>axios.post(search + `/api/ip`, params);

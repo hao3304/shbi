@@ -34,7 +34,7 @@
 </style>
 <script>
 
-  import { searchRecord } from '../module/service';
+  import { queryRecord } from '../module/service';
 
   export default {
     data(){
@@ -132,7 +132,7 @@
           params.end = date.end
         }
         // let query = {...params,...this.getDate(this.form.date)}
-        searchRecord(params).then(({data})=>{
+        queryRecord(params).then(({data})=>{
           this.total = data.count;
           this.data = data.data;
           this.loading = false;
