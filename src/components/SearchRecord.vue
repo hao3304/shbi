@@ -1,13 +1,13 @@
 <template>
   <div class="app" style="color: #fff">
     <Form ref="form" :model="form"  :label-width="80" :rules="rules" inline>
-      <FormItem prop="email" label="目标邮件">
-        <Input v-model="form.email">
+      <FormItem prop="name" label="目标邮件">
+        <Input v-model="form.name">
         <span slot="append">@sjtu.edu.cn</span>
         </Input>
       </FormItem>
       <FormItem label="操作行为">
-        <Select v-model="form.action" style="width:200px">
+        <Select v-model="form.type" style="width:200px">
           <Option v-for="item in actions" :value="item.value" :key="item.value">{{ item.name }}</Option>
         </Select>
       </FormItem>
@@ -41,14 +41,14 @@
       return{
         prefix:'@sjtu.edu.cn',
         form: {
-          email:'qizhwei',
+          name:'qizhwei',
           date:[],
-          action:'DELE',
+          type:'authlogin',
           page:1,
           size:20
         },
         rules:{
-          email:[
+          name:[
             {required:true,message:'必填项',trigger:'blur'}
           ]
         },
@@ -61,20 +61,28 @@
             title:'#',
             width: 60,
             render: (h, params) => {
-              return h('span',params.index + (params.row.page-1)*20 +1)
+              return h('span',params.index + (this.form.page-1)*20 +1)
             }
           },
           {
-            title: '地址（address）',
-            key: 'address'
+            title: '地址',
+            key: 'name'
           },
           {
-            title: '操作行为（action）',
-            key: 'action'
+            title: '系统IP（oip）',
+            key: 'oip'
           },
           {
-            title: '系统IP（systemIp）',
-            key: 'systemIp'
+            title: 'via',
+            key: 'via'
+          },
+          {
+            title: 'city',
+            key: 'city'
+          },
+          {
+            title: 'country',
+            key: 'country'
           },
           {
             title: '操作时间（timestamp）',
@@ -84,13 +92,13 @@
           }
         ],
         actions:[
-          {value:"DELE",name:'DELE'},
-          {value:"LOGIN",name:'LOGIN'},
-          {value:"RETR",name:'RETR'},
-          {value:"FETCH",name:'FETCH'},
-          {value:"Adding",name:'Adding'},
-          {value:"EXPUNGE",name:'EXPUNGE'},
-          {value:"SendMsgRequest",name:'SendMsgRequest'},
+          {value:"authlogin",name:'LOGIN'},
+          {value:"pop3_delete",name:'DELE'},
+          // {value:"RETR",name:'RETR'},
+          // {value:"FETCH",name:'FETCH'},
+          // {value:"Adding",name:'Adding'},
+          // {value:"EXPUNGE",name:'EXPUNGE'},
+          // {value:"SendMsgRequest",name:'SendMsgRequest'},
         ]
       }
     },
@@ -107,9 +115,9 @@
         })
       },
       onReset(){
-        this.form.email = '';
+        this.form.name = '';
         this.form.date = [];
-        this.form.action = 'DELE';
+        this.form.type = 'authlogin';
         this.form.page = 1;
         this.data = [];
       },
@@ -129,20 +137,28 @@
       getData() {
         this.loading = true;
         let params = JSON.parse(JSON.stringify(this.form));
-        params.email += this.prefix;
-        let query = {...params,...{date:this.getDate(this.form.date)}}
-        searchRecord(query).then(rep=>{
-          this.total = rep.total.records[0]._fields[0].low;
-          this.data = this.transData(rep.data);
+        params.name += this.prefix;
+
+        const date = this.getDate(this.form.date);
+        if(date.begin) {
+          params.begin = date.begin
+          params.end = date.end
+        }
+        // let query = {...params,...this.getDate(this.form.date)}
+        searchRecord(params).then(({data})=>{
+          this.total = data.total;
+          this.data = data.data;
           this.loading = false;
         })
       },
       getDate(d){
-
         if(d.length == 2){
-          return [d[0].valueOf()/1000,d[1].valueOf()/1000]
-        }else{
-          return [];
+          return {
+            begin: d[0].valueOf()/1000,
+            end: d[1].valueOf()/1000
+          }
+        }else {
+          return {}
         }
       },
       handleCurrentChange(p) {
