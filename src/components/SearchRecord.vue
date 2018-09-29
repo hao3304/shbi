@@ -20,7 +20,7 @@
     </Form>
 
     <div style="padding:0 10px;">
-      <Table :loading="loading" :columns="columns"  :data="data"></Table>
+      <Table :height="height" :loading="loading" :columns="columns"  :data="data"></Table>
       <div style="text-align: right;padding:10px 0">
         <Page :total="total" @on-change="handleCurrentChange" :page-size="20"></Page>
       </div>
@@ -39,6 +39,7 @@
   export default {
     data(){
       return{
+        height: document.documentElement.clientHeight - 350,
         prefix:'@sjtu.edu.cn',
         form: {
           name:'qizhwei',
@@ -53,7 +54,6 @@
           ]
         },
         data:[],
-        height:document.documentElement.clientHeight - 190,
         total:0,
         loading:false,
         columns:[
@@ -121,19 +121,6 @@
         this.form.page = 1;
         this.data = [];
       },
-      transData(data) {
-        return data.map(d=>{
-          let obj = d._fields[0].segments[0];
-
-          return {
-            address:obj.start.properties.address,
-            action:obj.relationship.properties.action,
-            timestamp:obj.relationship.properties.timestamp,
-            systemIp:obj.relationship.properties.systemIp,
-            page:this.form.page
-          }
-        });
-      },
       getData() {
         this.loading = true;
         let params = JSON.parse(JSON.stringify(this.form));
@@ -146,7 +133,7 @@
         }
         // let query = {...params,...this.getDate(this.form.date)}
         searchRecord(params).then(({data})=>{
-          this.total = data.total;
+          this.total = data.count;
           this.data = data.data;
           this.loading = false;
         })
