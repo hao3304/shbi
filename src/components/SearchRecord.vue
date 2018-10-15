@@ -43,7 +43,7 @@
         form: {
           name:'qizhwei',
           date:[],
-          type:'authlogin',
+          type:'imap_login',
           page:1,
           size:20
         },
