@@ -35,7 +35,6 @@
 <script>
 
   import { queryRecord } from '../module/service';
-
   export default {
     data(){
       return{
