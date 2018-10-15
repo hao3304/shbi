@@ -92,8 +92,10 @@
           }
         ],
         actions:[
-          {value:"authlogin",name:'LOGIN'},
-          {value:"pop3_delete",name:'DELE'},
+          {value:"imap_login",name:'imap_login'},
+          {value:"imap_delete",name:'imap_delete'},
+          {value:"pop3_login",name:'pop3_login'},
+          {value:"pop3_delete",name:'pop3_delete'}
           // {value:"RETR",name:'RETR'},
           // {value:"FETCH",name:'FETCH'},
           // {value:"Adding",name:'Adding'},
