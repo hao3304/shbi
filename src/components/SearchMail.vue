@@ -120,8 +120,11 @@
             key: 'nrcpt'
           },
           {
-            title: '邮件大小',
-            key: 'mailSize'
+            title: '邮件大小(KB)',
+            key: 'mailSize',
+            render: () => {
+              return h('span', (row.mailSize/1000).toFixed(2))
+            }
           }
         ],
         columns:[
