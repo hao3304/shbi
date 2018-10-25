@@ -92,6 +92,10 @@
             }
           },
           {
+            title:'邮件ID',
+            key:'messageId'
+          },
+          {
             title:'对方地址',
             key:'fromAddr'
           },
@@ -106,6 +110,18 @@
             render:(h,{row})=>{
               return h('span', row.ipAddr)
             }
+          },
+          {
+            title:'状态',
+            key: 'status'
+          },
+          {
+            title: '收件人数',
+            key: 'nrcpt'
+          },
+          {
+            title: '邮件大小',
+            key: 'mailSize'
           }
         ],
         columns:[

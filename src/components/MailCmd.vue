@@ -11,6 +11,8 @@
           <Button icon="locked"  @click="onCmd('locked')"  type="warning"  >Locked</Button>
           &nbsp;&nbsp;
           <Button icon="unlocked"  @click="onCmd('active')"  type="primary" >Active</Button>
+
+          <Button icon="size" @click="onCmd('gmi')">查看空间</Button>
         </FormItem>
       </Form>
 
