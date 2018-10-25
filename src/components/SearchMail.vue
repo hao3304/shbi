@@ -159,7 +159,7 @@
           {
             title: '邮件大小(Kb)',
             render:(h,{row})=>{
-              return h('span',(row.size/1024).toFixed(2))
+              return h('span',(row.mailSize/1024).toFixed(2))
             }
           }
         ]
