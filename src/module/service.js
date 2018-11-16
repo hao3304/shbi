@@ -46,6 +46,9 @@ export const queryRecord = params=>axios.get(search + `/api/query`, {params:para
 export const searchTop = params=>axios.get(search + `/api/top`, {params:params})
 export const getIp = ()=>axios.get(search + `/api/ip`);
 export const postIp = params=>axios.post(search + `/api/ip`, params);
+export const getDomain = ()=>axios.get(search + `/api/domain`);
+export const getSuccess = (params)=>axios.get(search + `/api/success`, {params});
+export const postDomain = params=>axios.post(search + `/api/domain`, params);
 export const getGeoTop = (params)=> axios.get(search + `/api/geotop`, {params})
 
 export const doLogin = params=>axios.post('/auth/login',params);

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import MailIndex from '@/components/MailIndex'
 import MailArea from '@/components/MailContrast'
+import MailSuccess from '@/components/MailSuccess'
 import MailConfig from '@/components/MailConfig'
 import SearchRecord from '@/components/SearchRecord'
 import SearchMail from '@/components/SearchMail'
@@ -10,6 +11,7 @@ import USerConfig from '@/components/UserConfig'
 import Top from '@/components/Top'
 import GeoTop from '@/components/GeoTop'
 import Ip from '@/components/IpConfig'
+import Domain from '@/components/DomainConfig'
 
 Vue.use(Router)
 
@@ -24,6 +26,11 @@ export default new Router({
       path: '/contrast',
       name: 'mail-contrast',
       component: MailArea
+    },
+    {
+      path: '/success',
+      name: 'mail-success',
+      component: MailSuccess
     },
     {
       path: '/config',
@@ -54,6 +61,11 @@ export default new Router({
       path: '/config_ip',
       name: 'config-ip',
       component: Ip
+    },
+    {
+      path: '/config_domain',
+      name: 'config-domain',
+      component: Domain
     },
     {
       path: '/search_top',

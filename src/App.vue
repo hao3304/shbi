@@ -121,6 +121,10 @@
                 name:'指标对比'
               },
               {
+                id:'mail-success',
+                name:'成功率统计'
+              },
+              {
                 id:'mail-config',
                 name:'指标配置'
               }
@@ -164,6 +168,11 @@
               {
                 id:'config-ip',
                 name:'ip白名单',
+                admin:true
+              },
+              {
+                id:'config-domain',
+                name:'邮箱统计配置',
                 admin:true
               }
             ]
