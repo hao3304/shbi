@@ -33,23 +33,23 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       "/auth/*" : {
-        target: 'http://202.121.178.254:82/',
+        target: 'http://202.121.178.254/',
         secure: false
       },
       "/api/*" : {
-        target: 'http://202.121.178.254:82/',
+        target: 'http://202.121.178.254/',
         secure: false
       },
       "/service/*" : {
-        target: 'http://202.121.178.254:82/',
+        target: 'http://202.121.178.254/',
         secure: false
       },
       "/email/*" : {
-        target: 'http://202.121.178.254:82/',
+        target: 'http://202.121.178.254/',
         secure: false
       },
       "/mongo/api/*" : {
-        target: 'http://202.121.178.254:82/',
+        target: 'http://202.121.178.254/',
         secure: false
       }
     },

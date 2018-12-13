@@ -3,7 +3,7 @@
     <div class="mode-select">
       <Select v-model="mode" @on-change="onModeChange">
         <Option value="all">全部</Option>
-        <Option v-for="m in list" v-if="m.Visible" :value="m.Query" :key="m.Query">{{m.Name}}</Option>
+        <Option v-for="m in list" v-if="m.Visible" :value="m.Query" :key="m.Name">{{m.Name}}</Option>
       </Select>
     </div>
     <Row>
