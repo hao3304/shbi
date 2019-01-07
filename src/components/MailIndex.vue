@@ -287,6 +287,7 @@
             t = '12M';
             f = 'YYYY-MM';
             i = '1M';
+            break;
           case 't':
             t = '1M';
             f = 'MM-dd';
