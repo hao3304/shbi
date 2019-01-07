@@ -64,8 +64,9 @@
 
             <div style="float: right">
               <ButtonGroup size="small" >
-                <Button  :type="type=='m'?'primary':'default'" @click="onSelect('m')" >最近一小时</Button>
-                <Button  :type="type=='d'?'primary':'default'"  @click="onSelect('h')" >最近一天</Button>
+                <Button  :type="type=='mm'?'primary':'default'" @click="onSelect('mm')" >最近一小时</Button>
+                <Button  :type="type=='h'?'primary':'default'"  @click="onSelect('h')" >最近24小时</Button>
+                <Button  :type="type=='w'?'primary':'default'"  @click="onSelect('w')" >最近七天</Button>
                 <Button  :type="type=='d'?'primary':'default'"  @click="onSelect('d')" >最近三十天</Button>
                 <Button  :type="type=='M'?'primary':'default'"  @click="onSelect('M')" >最近一年</Button>
               </ButtonGroup>
@@ -272,7 +273,7 @@
         let t = '1h',f = 'YYYY-MM-dd',i;
 
         switch (type){
-          case 'm':
+          case 'mm':
             t = '1h';
             f = 'HH:mm:ss';
             i = '60s';
@@ -290,6 +291,10 @@
             t = '24h';
             f = 'MM-dd HH:mm';
             i = '1h';
+          case 'w':
+            t = '7d';
+            f = 'MM-dd HH:mm';
+            i = '2h';
         }
 
         let p = {
