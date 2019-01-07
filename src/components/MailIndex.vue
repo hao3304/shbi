@@ -64,9 +64,10 @@
 
             <div style="float: right">
               <ButtonGroup size="small" >
-                <Button  :type="type=='m'?'primary':'default'" @click="onSelect('m')" >分</Button>
-                <Button  :type="type=='d'?'primary':'default'"  @click="onSelect('d')" >日</Button>
-                <Button  :type="type=='M'?'primary':'default'"  @click="onSelect('M')" >月</Button>
+                <Button  :type="type=='m'?'primary':'default'" @click="onSelect('m')" >最近一小时</Button>
+                <Button  :type="type=='d'?'primary':'default'"  @click="onSelect('h')" >最近一天</Button>
+                <Button  :type="type=='d'?'primary':'default'"  @click="onSelect('d')" >最近三十天</Button>
+                <Button  :type="type=='M'?'primary':'default'"  @click="onSelect('M')" >最近一年</Button>
               </ButtonGroup>
             </div>
           </h5>
@@ -285,6 +286,10 @@
             t = '12M';
             f = 'YYYY-MM';
             i = '1M';
+          case 'h':
+            t = '24h';
+            f = 'MM-dd HH:mm';
+            i = '1h';
         }
 
         let p = {
